@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+  db:
+    image: postgres:9.6-alpine
+    environment:
+    - API_SECRET=98hbun98h
+    - POSTGRES_DB=gopost
+    - POSTGRES_USER=api-go
+    - POSTGRES_PASSWORD=lmdpe
+    ports:
+    - "5432:5432"
+
+volumes:
+  db-data: {}
