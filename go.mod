@@ -7,6 +7,7 @@ require (
 	github.com/aws/aws-sdk-go v1.26.7 // indirect
 	github.com/badoux/checkmail v0.0.0-20181210160741-9661bd69e9ad
 	github.com/bearbin/go-age v0.0.0-20140407072555-316d0c1e7cd1
+	github.com/biezhi/gorm-paginator/pagination v0.0.0-20190124091837-7a5c8ed20334 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/gin-contrib/cors v1.3.0 // indirect
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607 // indirect

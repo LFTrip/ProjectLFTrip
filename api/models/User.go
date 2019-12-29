@@ -18,17 +18,18 @@ import (
 // User Struct
 type User struct {
 	UUID             uuid.UUID `gorm:"type:uuid;unique_index;" json:"uuid"`
+	ID               uint64    `gorm:"primary_key;auto_increment" json:"id"`
 	Firstname        string    `valid:"required,alpha,length(2|255)" json:"firstname"`
 	Lastname         string    `valid:"required,alpha,length(2|255)" json:"lastname"`
 	Email            string    `gorm:"size:100;not null;unique" valid:"email" json:"email"`
 	Password         string    `gorm:"size:100;not null;" json:"password"`
 	Accesslevel      int       `valid:"range(0|1),numeric" json:"access_level"`
-	Dateofbirth      time.Time `gorm:"not null;" validate:"min=18" json:"date_of_birth"`
+	Dateofbirth      time.Time `gorm:"not null;" json:"date_of_birth"`
 	Sexe             string    `gorm:"size:100;not null;" json:"sexe"`
-	City             string    `gorm:"size:250;null;" json:"city"`
-	PhoneNumber      string    `gorm:"size:10;null" json:"phone_number"`
+	City             string    `gorm:"size:150;null;" json:"city"`
+	PhoneNumber      string    `gorm:"size:15;null" json:"phone_number"`
 	DepartureAirport string    `gorm:"size:250;null;" json:"departure_airport"`
-	Description      string    `gorm:"size:250;null;" json:"description"`
+	Description      string    `gorm:"text;null;" json:"description"`
 	AvatarPath       string    `gorm:"size:255;null;" json:"avatar_path"`
 	CreatedAt        time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt        time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
@@ -60,6 +61,7 @@ func (u *User) BeforeUpdate(scope *gorm.Scope) error {
 // Prepare : prepare  statements
 func (u *User) Prepare() {
 	u.UUID = uuid.NewV4()
+	u.ID = 0
 	u.Firstname = html.EscapeString(strings.TrimSpace(u.Firstname))
 	u.Lastname = html.EscapeString(strings.TrimSpace(u.Lastname))
 	u.Email = html.EscapeString(strings.TrimSpace(u.Email))
@@ -185,7 +187,7 @@ func (u *User) FindAllUsers(db *gorm.DB) (*[]User, error) {
 // FindUserByID : function to find a user with an ID
 func (u *User) FindUserByID(db *gorm.DB, uid uint64) (*User, error) {
 	var err error
-	err = db.Debug().Model(User{}).Where("uuid = ?", uid).Take(&u).Error
+	err = db.Debug().Model(User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -202,12 +204,13 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db = db.Debug().Model(&User{}).Where("uuid = ?", uid).Take(&User{}).UpdateColumns(
+	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
 		map[string]interface{}{
 			"password":          u.Password,
 			"firstname":         u.Firstname,
 			"lastname":          u.Lastname,
 			"email":             u.Email,
+			"date_of_birth":     u.Dateofbirth,
 			"sexe":              u.Sexe,
 			"city":              u.City,
 			"phone_number":      u.PhoneNumber,
@@ -220,7 +223,7 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 		return &User{}, db.Error
 	}
 	// This is the display the updated user
-	err = db.Debug().Model(&User{}).Where("uuid = ?", uid).Take(&u).Error
+	err = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -229,7 +232,7 @@ func (u *User) UpdateAUser(db *gorm.DB, uid uint64) (*User, error) {
 
 // UpdateAUserAvatar : update an avatar user
 func (u *User) UpdateAUserAvatar(db *gorm.DB, uid uint64) (*User, error) {
-	db = db.Debug().Model(&User{}).Where("uuid = ?", uid).Take(&User{}).UpdateColumns(
+	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).UpdateColumns(
 		map[string]interface{}{
 			"avatar_path": u.AvatarPath,
 			"update_at":   time.Now(),
@@ -239,7 +242,7 @@ func (u *User) UpdateAUserAvatar(db *gorm.DB, uid uint64) (*User, error) {
 		return &User{}, db.Error
 	}
 	// This is the display the updated user
-	err := db.Debug().Model(&User{}).Where("uuid = ?", uid).Take(&u).Error
+	err := db.Debug().Model(&User{}).Where("id = ?", uid).Take(&u).Error
 	if err != nil {
 		return &User{}, err
 	}
@@ -248,7 +251,7 @@ func (u *User) UpdateAUserAvatar(db *gorm.DB, uid uint64) (*User, error) {
 
 // DeleteAUser : function to delete the user
 func (u *User) DeleteAUser(db *gorm.DB, uid uint64) (int64, error) {
-	db = db.Debug().Model(&User{}).Where("uuid = ?", uid).Take(&User{}).Delete(&User{})
+	db = db.Debug().Model(&User{}).Where("id = ?", uid).Take(&User{}).Delete(&User{})
 
 	if db.Error != nil {
 		return 0, db.Error
