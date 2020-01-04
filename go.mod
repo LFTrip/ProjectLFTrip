@@ -12,9 +12,9 @@ require (
 	github.com/gin-contrib/cors v1.3.0 // indirect
 	github.com/gin-gonic/contrib v0.0.0-20191209060500-d6e26eeaa607 // indirect
 	github.com/gin-gonic/gin v1.5.0
-	github.com/gorilla/mux v1.7.3 // indirect
+	github.com/gorilla/mux v1.7.3
 	github.com/jinzhu/gorm v1.9.11
-	github.com/joho/godotenv v1.3.0 // indirect
+	github.com/joho/godotenv v1.3.0
 	github.com/matcornic/hermes/v2 v2.0.2 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/sendgrid/rest v2.4.1+incompatible // indirect
