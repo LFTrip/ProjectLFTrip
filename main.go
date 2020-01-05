@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Muhammad-Tounsi/ProjectLFTrip/api"
+import "github.com/LFTrip/ProjectLFTrip/api"
 
 func main() {
 	api.Run()

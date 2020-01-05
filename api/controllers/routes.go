@@ -1,6 +1,6 @@
 package controllers
 
-import "github.com/Muhammad-Tounsi/ProjectLFTrip/api/middlewares"
+import "github.com/LFTrip/ProjectLFTrip/api/middlewares"
 
 func (s *Server) initializeRoutes() {
 

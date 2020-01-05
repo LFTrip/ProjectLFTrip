@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/responses"
+	"github.com/LFTrip/ProjectLFTrip/api/responses"
 )
 
 func (server *Server) Home(w http.ResponseWriter, r *http.Request) {

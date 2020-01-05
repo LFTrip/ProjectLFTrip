@@ -10,7 +10,7 @@ import (
 
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/models"
+	"github.com/LFTrip/ProjectLFTrip/api/models"
 )
 
 type Server struct {

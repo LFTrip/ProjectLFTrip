@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/security"
+	"github.com/LFTrip/ProjectLFTrip/api/security"
 
 	"github.com/badoux/checkmail"
 	"github.com/jinzhu/gorm"

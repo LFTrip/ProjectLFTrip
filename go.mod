@@ -1,4 +1,4 @@
-module github.com/Muhammad-Tounsi/ProjectLFTrip
+module github.com/LFTrip/ProjectLFTrip
 
 go 1.13
 

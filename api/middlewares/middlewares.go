@@ -3,7 +3,7 @@ package middlewares
 import (
 	"net/http"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/auth"
+	"github.com/LFTrip/ProjectLFTrip/api/auth"
 	"github.com/gin-gonic/gin"
 )
 

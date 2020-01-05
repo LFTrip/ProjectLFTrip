@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/models"
+	"github.com/LFTrip/ProjectLFTrip/api/models"
 	"github.com/jinzhu/gorm"
 )
 

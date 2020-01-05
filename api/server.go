@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/controllers"
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/seed"
+	"github.com/LFTrip/ProjectLFTrip/api/controllers"
+	"github.com/LFTrip/ProjectLFTrip/api/seed"
 )
 
 var server = controllers.Server{}

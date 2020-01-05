@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/auth"
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/models"
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/responses"
-	"github.com/Muhammad-Tounsi/ProjectLFTrip/api/utils/formaterror"
+	"github.com/LFTrip/ProjectLFTrip/api/auth"
+	"github.com/LFTrip/ProjectLFTrip/api/models"
+	"github.com/LFTrip/ProjectLFTrip/api/responses"
+	"github.com/LFTrip/ProjectLFTrip/api/utils/formaterror"
 	"github.com/gorilla/mux"
 )
 
