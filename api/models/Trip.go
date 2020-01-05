@@ -26,7 +26,7 @@ type Trip struct {
 	Lodging      string    `gorm:"text;null;" json:"lodging"`
 	Budget       int       `gorm:"not null;" json:"budget"`
 	Author       User      `json:"author"`
-	AuthorID     uint64    `gorm:"type:uuid;not null" json:"author_id"`
+	AuthorID     uint64    `gorm:"not null" json:"author_id"`
 	CreatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt    time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }

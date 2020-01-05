@@ -13,8 +13,8 @@ import (
 )
 
 type response struct {
-	Token	string 			`json:"token"`
-	User 	models.User 	`json:"user"`
+	Token	string 			`json:"Token"`
+	User 	models.User 	`json:"User"`
 }
 
 func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
@@ -36,13 +36,13 @@ func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
 	}
-	token, err := server.SignIn(user.Email, user.Password)
+	res, err := server.SignIn(user.Email, user.Password)
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
 		responses.ERROR(w, http.StatusUnprocessableEntity, formattedError)
 		return
 	}
-	responses.JSON(w, http.StatusOK, token)
+	responses.JSON(w, http.StatusOK, res)
 }
 
 func (server *Server) SignIn(email, password string) (response, error) {

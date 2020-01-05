@@ -13,6 +13,7 @@ import (
 	"github.com/badoux/checkmail"
 	"github.com/jinzhu/gorm"
 	uuid "github.com/twinj/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // User Struct
@@ -74,80 +75,135 @@ func (u *User) Prepare() {
 	u.UpdatedAt = time.Now()
 }
 
-// Validate : function to check the data
-func (u *User) Validate(action string) map[string]string {
-	var errorMessages = make(map[string]string)
+// VerifyPassword : This method compare the password with the hash
+func VerifyPassword(hashedPassword, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}
+
+
+// Validate : function to check the data	
+/*func (u *User) Validate(action string) map[string]error {
+	var errorMessages = make(map[string]error)
 	var err error
 
 	switch strings.ToLower(action) {
 	case "update":
 		if u.Email == "" {
 			err = errors.New("Required Email")
-			errorMessages["Required_email"] = err.Error()
+			errorMessages["Required_email"] = err
 		}
 		if u.Email != "" {
 			if err = checkmail.ValidateFormat(u.Email); err != nil {
 				err = errors.New("Invalid Email")
-				errorMessages["Invalid_email"] = err.Error()
+				errorMessages["Invalid_email"] = err
 			}
 		}
 
 	case "login":
 		if u.Password == "" {
 			err = errors.New("Required Password")
-			errorMessages["Required_password"] = err.Error()
+			errorMessages["Required_password"] = err
 		}
 		if u.Email == "" {
 			err = errors.New("Required Email")
-			errorMessages["Required_email"] = err.Error()
+			errorMessages["Required_email"] = err
 		}
 		if u.Email != "" {
 			if err = checkmail.ValidateFormat(u.Email); err != nil {
 				err = errors.New("Invalid Email")
-				errorMessages["Invalid_email"] = err.Error()
+				errorMessages["Invalid_email"] = err
 			}
 		}
 	case "forgotpassword":
 		if u.Email == "" {
 			err = errors.New("Required Email")
-			errorMessages["Required_email"] = err.Error()
+			errorMessages["Required_email"] = err
 		}
 		if u.Email != "" {
 			if err = checkmail.ValidateFormat(u.Email); err != nil {
 				err = errors.New("Invalid Email")
-				errorMessages["Invalid_email"] = err.Error()
+				errorMessages["Invalid_email"] = err
 			}
 		}
 	default:
 		if u.Firstname == "" {
 			err = errors.New("Required Firstname")
-			errorMessages["Required_firstname"] = err.Error()
+			errorMessages["Required_firstname"] = err
 		}
 		if u.Lastname == "" {
 			err = errors.New("Required Lastname")
-			errorMessages["Required_lastname"] = err.Error()
+			errorMessages["Required_lastname"] = err
 		}
 		if u.Password == "" {
 			err = errors.New("Required Password")
-			errorMessages["Required_password"] = err.Error()
+			errorMessages["Required_password"] = err
 		}
 		if u.Password != "" && len(u.Password) < 6 {
 			err = errors.New("Password should be atleast 6 characters")
-			errorMessages["Invalid_password"] = err.Error()
+			errorMessages["Invalid_password"] = err
 		}
 		if u.Email == "" {
 			err = errors.New("Required Email")
-			errorMessages["Required_email"] = err.Error()
+			errorMessages["Required_email"] = err
 
 		}
 		if u.Email != "" {
 			if err = checkmail.ValidateFormat(u.Email); err != nil {
 				err = errors.New("Invalid Email")
-				errorMessages["Invalid_email"] = err.Error()
+				errorMessages["Invalid_email"] = err
 			}
 		}
 	}
-	return errorMessages
+	return nil
+	
+}*/
+
+// Validate : Validation rule on the age of the user
+// and if the email already exist
+func (u *User) Validate(action string) error {
+	switch strings.ToLower(action) {
+	case "update":
+		if u.Firstname == "" {
+			return errors.New("Required Firstname")
+		}
+		if u.Password == "" {
+			return errors.New("Required Password")
+		}
+		if u.Email == "" {
+			return errors.New("Required Email")
+		}
+		if err := checkmail.ValidateFormat(u.Email); err != nil {
+			return errors.New("Invalid Email")
+		}
+
+		return nil
+	case "login":
+		if u.Password == "" {
+			return errors.New("Required Password")
+		}
+		if u.Email == "" {
+			return errors.New("Required Email")
+		}
+		if err := checkmail.ValidateFormat(u.Email); err != nil {
+			return errors.New("Invalid Email")
+		}
+		return nil
+
+	default:
+		if u.Firstname == "" {
+			return errors.New("Required Firstname")
+		}
+		if u.Password == "" {
+			return errors.New("Required Password")
+		}
+		if u.Email == "" {
+			return errors.New("Required Email")
+		}
+		if err := checkmail.ValidateFormat(u.Email); err != nil {
+			return errors.New("Invalid Email")
+		}
+		return nil
+	}
 }
 
 // AfterFind : values of return
