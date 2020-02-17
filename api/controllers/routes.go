@@ -7,7 +7,7 @@ func (s *Server) initializeRoutes() {
 	v1 := s.Router.Group("/api/v1")
 	{
 		// Home Route
-		v1.Get("/", s.Home)
+		//v1.Get("/", s.Home)
 
 		// Login Route
 		v1.POST("/login", s.Login)
@@ -25,6 +25,12 @@ func (s *Server) initializeRoutes() {
 		v1.DELETE("/users/:id", middlewares.TokenAuthMiddleware(), s.DeleteUser)
 
 		// Trip routes
+		v1.POST("/trips", middlewares.TokenAuthMiddleware(), s.CreateTrip)
+		v1.GET("/trips", s.GetTrips)
+		v1.GET("/trips/:id", s.GetTrip)
+		v1.PUT("/trips/:id", middlewares.TokenAuthMiddleware(), s.UpdateTrip)
+		v1.DELETE("/trips/:id", middlewares.TokenAuthMiddleware(), s.DeleteTrip)
+		v1.GET("/user_trips/:id", s.GetUserTrips)
 
 		//Like routes
 		v1.GET("/likes/:id", s.GetLikes)

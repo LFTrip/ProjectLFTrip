@@ -5,13 +5,21 @@ import (
 	"log"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/LFTrip/ProjectLFTrip/api/controllers"
 	"github.com/LFTrip/ProjectLFTrip/api/seed"
+	"github.com/joho/godotenv"
 )
 
 var server = controllers.Server{}
 
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(); err != nil {
+		log.Print(".env file found")
+	}
+}
+
+//Run : run the server
 func Run() {
 
 	var err error
