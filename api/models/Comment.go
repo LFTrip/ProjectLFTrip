@@ -12,7 +12,7 @@ import (
 // Comment struct
 type Comment struct {
 	ID        uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	UserID    uint32    `gorm:"not null" json:"user_id"`
+	UserID    uint64    `gorm:"not null" json:"user_id"`
 	TripID    uint64    `gorm:"not null" json:"trip_id"`
 	Body      string    `gorm:"text;not null;" json:"body"`
 	User      User      `json:"user"`

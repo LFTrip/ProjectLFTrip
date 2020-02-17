@@ -11,7 +11,7 @@ import (
 // Like struct
 type Like struct {
 	ID        uint64    `gorm:"primary_key;auto_increment" json:"id"`
-	UserID    uint32    `gorm:"not null" json:"user_id"`
+	UserID    uint64    `gorm:"not null" json:"user_id"`
 	TripID    uint64    `gorm:"not null" json:"trip_id"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`

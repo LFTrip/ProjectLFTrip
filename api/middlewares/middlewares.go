@@ -1,11 +1,11 @@
 package middlewares
 
 import (
-	"errors"
+	//"errors"
 	"net/http"
 
 	"github.com/LFTrip/ProjectLFTrip/api/auth"
-	"github.com/LFTrip/ProjectLFTrip/api/responses"
+	//"github.com/LFTrip/ProjectLFTrip/api/responses"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,15 +28,15 @@ func TokenAuthMiddleware() gin.HandlerFunc {
 }
 
 // SetMiddlewareJSON : This will format all responses to JSON
-func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
+/*func SetMiddlewareJSON(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		next(w, r)
 	}
-}
+}*/
 
 // SetMiddlewareAuthentication : will check for the validity of the authentication token provided
-func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
+/*func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		err := auth.TokenValid(r)
 		if err != nil {
@@ -45,9 +45,7 @@ func SetMiddlewareAuthentication(next http.HandlerFunc) http.HandlerFunc {
 		}
 		next(w, r)
 	}
-}
-
-
+}*/
 
 // CORSMiddleware : This enables us interact with the React Frontend
 func CORSMiddleware() gin.HandlerFunc {

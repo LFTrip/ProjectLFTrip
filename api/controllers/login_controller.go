@@ -2,68 +2,94 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
 	"github.com/LFTrip/ProjectLFTrip/api/auth"
 	"github.com/LFTrip/ProjectLFTrip/api/models"
-	"github.com/LFTrip/ProjectLFTrip/api/responses"
+	"github.com/LFTrip/ProjectLFTrip/api/security"
 	"github.com/LFTrip/ProjectLFTrip/api/utils/formaterror"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type response struct {
-	Token	string 			`json:"Token"`
-	User 	models.User 	`json:"User"`
-}
+// Login : function login with gin framework
+func (server *Server) Login(c *gin.Context) {
+	//clear previous error if any
+	errList = map[string]string{}
 
-func (server *Server) Login(w http.ResponseWriter, r *http.Request) {
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"status":      http.StatusUnprocessableEntity,
+			"first error": "Unable to get request",
+		})
 		return
 	}
 	user := models.User{}
 	err = json.Unmarshal(body, &user)
 	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"status": http.StatusUnprocessableEntity,
+			"error":  "Cannot unmarshal body",
+		})
 		return
 	}
-
 	user.Prepare()
-	err = user.Validate("login")
-	if err != nil {
-		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+	errorMessages := user.Validate("login")
+	if len(errorMessages) > 0 {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"status": http.StatusUnprocessableEntity,
+			"error":  errorMessages,
+		})
 		return
 	}
-	res, err := server.SignIn(user.Email, user.Password)
+	userData, err := server.SignIn(user.Email, user.Password)
 	if err != nil {
 		formattedError := formaterror.FormatError(err.Error())
-		responses.ERROR(w, http.StatusUnprocessableEntity, formattedError)
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"status": http.StatusUnprocessableEntity,
+			"error":  formattedError,
+		})
 		return
 	}
-	responses.JSON(w, http.StatusOK, res)
+	c.JSON(http.StatusOK, gin.H{
+		"status":   http.StatusOK,
+		"response": userData,
+	})
 }
 
-func (server *Server) SignIn(email, password string) (response, error) {
+// SignIn : function SignIn with gin framework
+func (server *Server) SignIn(email, password string) (map[string]interface{}, error) {
 
 	var err error
-	var res response
+
+	userData := make(map[string]interface{})
+
 	user := models.User{}
 
 	err = server.DB.Debug().Model(models.User{}).Where("email = ?", email).Take(&user).Error
 	if err != nil {
-		return res, err
+		fmt.Println("this is the error getting the user: ", err)
+		return nil, err
 	}
-	err = models.VerifyPassword(user.Password, password)
+	err = security.VerifyPassword(user.Password, password)
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-		return res, err
+		fmt.Println("this is the error hashing the password: ", err)
+		return nil, err
 	}
-
 	token, err := auth.CreateToken(user.ID)
-	res = response{
-        Token:  token,
-		User:  user}
+	if err != nil {
+		fmt.Println("this is the error creating the token: ", err)
+		return nil, err
+	}
+	userData["token"] = token
+	userData["id"] = user.ID
+	userData["email"] = user.Email
+	userData["avatar_path"] = user.AvatarPath
+	userData["firstname"] = user.Firstname
+	userData["lastname"] = user.Lastname
 
-	return res, err
+	return userData, nil
 }
