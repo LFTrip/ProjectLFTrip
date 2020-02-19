@@ -492,6 +492,7 @@ func (server *Server) DeleteUser(c *gin.Context) {
 		})
 		return
 	}
+
 	_, err = like.DeleteUserLikes(server.DB, uint64(uid))
 	if err != nil {
 		errList["Other_error"] = "Please try again later"

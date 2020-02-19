@@ -11,6 +11,7 @@ import (
 
 // Comment struct
 type Comment struct {
+	tableName struct{}  `sql:"comment"`
 	ID        uint64    `gorm:"primary_key;auto_increment" json:"id"`
 	UserID    uint64    `gorm:"not null" json:"user_id"`
 	TripID    uint64    `gorm:"not null" json:"trip_id"`
