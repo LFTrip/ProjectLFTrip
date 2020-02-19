@@ -1,15 +1,63 @@
 version: '3.2'
 
 services:
+  app:
+    container_name: full_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports: 
+      - 8080:8080
+    restart: on-failure
+    volumes:
+      - .:/go/src/app
+    links: 
+      - db
+    depends_on:
+      - db # This service depends on postgres. Start that first.
+    networks:
+      - forum
   db:
     image: postgres:9.6-alpine
     environment:
     - API_SECRET=98hbun98h
-    - POSTGRES_DB=golftrip
+    - POSTGRES_DB=gopost
     - POSTGRES_USER=api-go
     - POSTGRES_PASSWORD=lmdpe
     ports:
     - "5432:5432"
+    networks:
+    - forum
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: api-go
+      PGADMIN_DEFAULT_PASSWORD: lmdpe
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    networks:
+      - forum
+    restart: on-failure
+  client:
+    build: '../FrontLFTRIP'
+    volumes:
+    - '../FrontLFTRIP:/home/node/app:rw,consistent'
+    working_dir: '/home/node/app'
+    command: 'yarn start'
+    ports:
+    - 127.0.0.1:3001:3000
+    networks:
+    - forum
+
 
 volumes:
   db-data: {}
+  api:
+
+networks:
+  forum:
+    driver: bridge
