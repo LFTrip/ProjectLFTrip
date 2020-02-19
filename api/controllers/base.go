@@ -5,19 +5,23 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
-	"github.com/jinzhu/gorm"
-
-	_ "github.com/jinzhu/gorm/dialects/postgres"
-
+	"github.com/LFTrip/ProjectLFTrip/api/middlewares"
 	"github.com/LFTrip/ProjectLFTrip/api/models"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres" //postgres database driver
 )
 
+// Server : Struct
 type Server struct {
 	DB     *gorm.DB
-	Router *mux.Router
+	Router *gin.Engine
 }
 
+var errList = make(map[string]string)
+
+// Initialize : connection to our database
 func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, DbName string) {
 
 	var err error
@@ -26,18 +30,27 @@ func (server *Server) Initialize(Dbdriver, DbUser, DbPassword, DbPort, DbHost, D
 	server.DB, err = gorm.Open(Dbdriver, DBURL)
 	if err != nil {
 		fmt.Printf("Cannot connect to %s database", Dbdriver)
-		log.Fatal("This is the error:", err)
+		log.Fatal("This is the error connecting to postgres:", err)
 	} else {
 		fmt.Printf("We are connected to the %s database", Dbdriver)
 	}
 
-	server.DB.Debug().AutoMigrate(&models.User{}) //database migration
+	//database migration
+	server.DB.Debug().AutoMigrate(
+		&models.User{},
+		&models.Trip{},
+		&models.ResetPassword{},
+		&models.Like{},
+		&models.Comment{},
+	)
 
-	server.Router = mux.NewRouter()
+	server.Router = gin.Default()
+	server.Router.Use(middlewares.CORSMiddleware())
 
 	server.initializeRoutes()
 }
 
+// Run : Status
 func (server *Server) Run(addr string) {
 	fmt.Println("Listening to port 8080")
 	log.Fatal(http.ListenAndServe(addr, server.Router))

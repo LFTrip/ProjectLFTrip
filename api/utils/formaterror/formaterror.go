@@ -1,7 +1,7 @@
 package formaterror
 
 import (
-	"errors"
+	//"errors"
 	"strings"
 )
 
@@ -9,7 +9,6 @@ var errorMessages = make(map[string]string)
 var err error
 
 // FormatError : handle errors when they occur
-/*
 func FormatError(errString string) map[string]string {
 	if strings.Contains(errString, "email") {
 		errorMessages["Taken_email"] = "Email Already Taken"
@@ -41,10 +40,9 @@ func FormatError(errString string) map[string]string {
 	}
 
 	return nil
-}*/
+}
 
-
-func FormatError(err string) error {
+/*func FormatError(err string) error {
 
 	if strings.Contains(err, "nickname") {
 		return errors.New("Nickname Already Taken")
@@ -61,4 +59,4 @@ func FormatError(err string) error {
 		return errors.New("Incorrect Password")
 	}
 	return errors.New("Incorrect Details")
-}
+}*/

@@ -2,6 +2,8 @@ package models
 
 import (
 	"errors"
+	"html"
+	"strings"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -91,6 +93,16 @@ func (t *Trip) Validate() map[string]string {
 		errorMessages["Required_budget"] = err.Error()
 	}
 	return errorMessages
+}
+
+//Prepare : prepare a trip
+// A FINIR
+func (t *Trip) Prepare() {
+	t.Title = html.EscapeString(strings.TrimSpace(t.Title))
+	t.Description = html.EscapeString(strings.TrimSpace(t.Description))
+	t.Author = User{}
+	t.CreatedAt = time.Now()
+	t.UpdatedAt = time.Now()
 }
 
 // SaveTrip : Method Save Trip, triggered on every saved on trip struct
