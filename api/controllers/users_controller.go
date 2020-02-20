@@ -441,7 +441,7 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	// Get user id from the token for valid tokens
 	tokenID, err = auth.ExtractTokenID(c.Request)
 	if err != nil {
-		errList["Unauthorized"] = "Unauthorized 1"
+		errList["Unauthorized"] = "Unauthorized"
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": http.StatusUnauthorized,
 			"error":  errList,
@@ -450,7 +450,7 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	}
 	// If the id is not the authenticated user id
 	if tokenID != 0 && tokenID != uint64(uid) {
-		errList["Unauthorized"] = "Unauthorized 2"
+		errList["Unauthorized"] = "Unauthorized"
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": http.StatusUnauthorized,
 			"error":  errList,

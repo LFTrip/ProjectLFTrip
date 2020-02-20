@@ -19,6 +19,7 @@ require (
 	github.com/satori/go.uuid v1.2.0
 	github.com/sendgrid/rest v2.4.1+incompatible // indirect
 	github.com/sendgrid/sendgrid-go v3.5.0+incompatible
+	github.com/stretchr/testify v1.4.0
 	github.com/twinj/uuid v1.0.0
 	golang.org/x/crypto v0.0.0-20191219195013-becbf705a915
 )
