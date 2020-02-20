@@ -1,0 +1,404 @@
+{
+	"info": {
+		"_postman_id": "070283b5-1f40-4a7f-997a-ea0a9a777a0d",
+		"name": "LFTrip Request",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"vjky\",\r\n    \"lastname\": \"Vakkjl\",\r\n    \"email\": \"shhhky@gmail.com\",\r\n    \"password\": \"password\",\r\n    \"access_level\": 1,\r\n    \"date_of_birth\": \"1992-02-08T00:00:00Z\",\r\n    \"sexe\": \"Homme\",\r\n    \"city\": \"Marseille\",\r\n    \"phone_number\": \"0624521458\",\r\n    \"departure_airport\": \"Tokyo\",\r\n    \"description\": \"Professeur de français\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"steve@gmail.com\",\n\t\"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				},
+				"description": "email & password\n{\n\t\"email\":,\n\t\"password\":\n}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user with id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1ODIwNjkxMjUsInVzZXJfaWQiOjF9.j6Nglj1yG6pBhpMHATAasOoJG_cOsGB869J2npbl3G8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t \"description\": \"Essai de modif\",\n\t \"email\": \"steve@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1ODIxMDk3MzQsInVzZXJfaWQiOjF9.HQvh2e-H6_22SiWVGr741ZEQRjtuOujMYmlS8Q08yR4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1ODIwNzI3MjQsInVzZXJfaWQiOjJ9.PQdRoKYXB_H6Sy1l43z3JaS4a843HponHlZJa9689Io",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"country\": \"Japon\",\r\n    \"title\": \"Voyage d'un mois au japon\",\r\n    \"description\": \"Voyage pour les fans de culture japonaise !\",\r\n    \"start_date\": \"2018-10-01T00:00:00Z\",\r\n    \"end_date\": \"2020-10-01T00:00:00Z\",\r\n    \"nb_days\": 30,\r\n    \"middle_age\": 23,\r\n    \"nb_traveler\": 3,\r\n    \"image_trip\": \"\",\r\n    \"program\": \"Pas encore décidé.\",\r\n    \"image_program\": \"\",\r\n    \"lodging\": \"Une tente !\",\r\n    \"budget\": 250,\r\n    \"author_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trips",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Trips",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trips",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trips"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get trip with id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trips/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trips",
+						"4"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Trips",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user_trips/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user_trips",
+						"2"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Update trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1ODIwNzI3MjQsInVzZXJfaWQiOjJ9.PQdRoKYXB_H6Sy1l43z3JaS4a843HponHlZJa9689Io",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJleHAiOjE1NzE5NDQyOTcsInVzZXJfaWQiOjF9.KmzFybp44OLv1z-a4-tfG9es5kgizsgiTagl3mrGvOM"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Voyage autour du japon\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trips/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trips",
+						"4"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete trip",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/trips/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"trips",
+						"1"
+					]
+				},
+				"description": "sqdqsd"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
