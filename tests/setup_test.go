@@ -391,11 +391,11 @@ func seedUsersTripsAndLikes() (models.Trip, []models.User, []models.Like, error)
 }
 
 func refreshUserTripAndCommentTable() error {
-	err := server.DB.DropTableIfExists(&models.User{}, &models.Trip{}, &models.Comment{}).Error
+	err := server.DB.DropTableIfExists(&models.Trip{}, &models.Comment{}, &models.User{}).Error
 	if err != nil {
 		return err
 	}
-	err = server.DB.AutoMigrate(&models.User{}, &models.Trip{}, &models.Comment{}).Error
+	err = server.DB.AutoMigrate(&models.Trip{}, &models.Comment{}, &models.User{}).Error
 	if err != nil {
 		return err
 	}
