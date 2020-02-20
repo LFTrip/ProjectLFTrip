@@ -441,7 +441,7 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	// Get user id from the token for valid tokens
 	tokenID, err = auth.ExtractTokenID(c.Request)
 	if err != nil {
-		errList["Unauthorized"] = "Unauthorized"
+		errList["Unauthorized"] = "Unauthorized 1"
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": http.StatusUnauthorized,
 			"error":  errList,
@@ -450,20 +450,9 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	}
 	// If the id is not the authenticated user id
 	if tokenID != 0 && tokenID != uint64(uid) {
-		errList["Unauthorized"] = "Unauthorized"
+		errList["Unauthorized"] = "Unauthorized 2"
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"status": http.StatusUnauthorized,
-			"error":  errList,
-		})
-		return
-	}
-
-	user := models.User{}
-	_, err = user.DeleteAUser(server.DB, uint64(uid))
-	if err != nil {
-		errList["Other_error"] = "Please try again later"
-		c.JSON(http.StatusNotFound, gin.H{
-			"status": http.StatusNotFound,
 			"error":  errList,
 		})
 		return
@@ -474,31 +463,43 @@ func (server *Server) DeleteUser(c *gin.Context) {
 	like := models.Like{}
 	trip := models.Trip{}
 
-	_, err = trip.DeleteUserTrips(server.DB, uint64(uid))
-	if err != nil {
-		errList["Other_error"] = "Please try again later"
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"status": http.StatusInternalServerError,
-			"error":  err,
-		})
-		return
-	}
 	_, err = comment.DeleteUserComments(server.DB, uint64(uid))
-	if err != nil {
+	/*if err != nil {
 		errList["Other_error"] = "Please try again later"
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": http.StatusInternalServerError,
 			"error":  err,
 		})
 		return
-	}
+	}*/
 
 	_, err = like.DeleteUserLikes(server.DB, uint64(uid))
-	if err != nil {
+	/*if err != nil {
 		errList["Other_error"] = "Please try again later"
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"status": http.StatusInternalServerError,
 			"error":  err,
+		})
+		return
+	}*/
+
+	_, err = trip.DeleteUserTrips(server.DB, uint64(uid))
+	/*if err != nil {
+		errList["Other_error"] = "Please try again later"
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status": http.StatusInternalServerError,
+			"error":  err,
+		})
+		return
+	}*/
+
+	user := models.User{}
+	_, err = user.DeleteAUser(server.DB, uint64(uid))
+	if err != nil {
+		errList["Other_error"] = "Please try again later"
+		c.JSON(http.StatusNotFound, gin.H{
+			"status": http.StatusNotFound,
+			"error":  errList,
 		})
 		return
 	}
