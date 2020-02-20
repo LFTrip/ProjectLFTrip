@@ -25,7 +25,7 @@ type User struct {
 	Email            string    `gorm:"size:100;not null;unique" valid:"email" json:"email"`
 	Password         string    `gorm:"size:100;not null;" json:"password"`
 	Accesslevel      int       `valid:"range(0|1),numeric" json:"access_level"`
-	Dateofbirth      time.Time `gorm:"not null;" json:"date_of_birth"`
+	Dateofbirth      time.Time `gorm:"null;" json:"date_of_birth"`
 	Sexe             string    `gorm:"size:100;not null;" json:"sexe"`
 	City             string    `gorm:"size:150;null;" json:"city"`
 	PhoneNumber      string    `gorm:"size:15;null" json:"phone_number"`
@@ -153,7 +153,7 @@ func (u *User) Validate(action string) map[string]string {
 			}
 		}
 	}
-	return nil
+	return errorMessages
 
 }
 
