@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports: 
-      - 8080:8080
+      - 8081:8081
     restart: on-failure
     volumes:
       - .:/go/src/app
@@ -43,9 +43,9 @@ services:
       - forum
     restart: on-failure
   client:
-    build: '../FrontLFTRIP'
+    build: '../FrontLFTRIP/client'
     volumes:
-    - '../FrontLFTRIP:/home/node/app:rw,consistent'
+    - '../FrontLFTRIP/client  :/home/node/app:rw,consistent'
     working_dir: '/home/node/app'
     command: 'yarn start'
     ports:
